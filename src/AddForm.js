@@ -1,4 +1,5 @@
 import "./App.css";
+import Table from "./Table";
 import React, { useState, useEffect } from 'react';
 import { firestore } from "./firebase_setup/firebase";
 import { collection, addDoc, getDocs, deleteDoc, updateDoc, doc, getDoc } from "firebase/firestore";
@@ -19,7 +20,6 @@ const AddForm = () => {
                 const newData = querySnapshot.docs
                     .map((doc) => ({ ...doc.data(), id: doc.id }));
                 setStudentList(newData);
-                console.log(studentList, newData);
             })
     }
     useEffect(() => {
@@ -118,18 +118,12 @@ const AddForm = () => {
                 <div className="btn-container">
                     <button type="submit" className="btn" onClick={addStudent}>{status}</button>
                 </div>
+                <div className="todo-content">
+                        <Table data={studentList} ></Table>
+                </div>
 
             </div>
-            <div className="todo-content">
-                {
-                    studentList?.map((item, i) => (
-                        <p key={i}>
-                            {item.name}
-                            <button onClick={() => updateStudent(item.id)}>Update</button>
-                        </p>
-                    ))
-                }
-            </div>
+        
         </section >
     )
 }
